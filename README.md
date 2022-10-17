@@ -27,5 +27,5 @@ Then, follow these steps:
 - Request
 
 ### Authors
-* **Cataldo Onelia Sara, Paolo Guidotti, Chiara Orrigo** - [Cataldo Onelia Sara](https://github.com/cataldosara98) 
+* **Cataldo Onelia Sara, Paolo Guidotti, Chiara Orrigo** - [Cataldo Onelia Sara](https://github.com/cataldosara98) - [Chiara Orrigo](https://github.com/chiaraOR) -
 
