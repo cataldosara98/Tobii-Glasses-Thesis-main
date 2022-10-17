@@ -96,7 +96,7 @@ def main():
 
         ],
 
-        [sg.Button("Riproduci Video", key="-APRI-", tooltip="Avvia video selezionato", button_color="green")],
+        [sg.Button("Riproduci Video", key="-APRI-", tooltip="Avvia video selezionato", button_color="pink")],
 
     ]
     window = sg.Window("Tobii Pro Glasses 3 - Controller", layout)  # Assegno il nome alla finestra
