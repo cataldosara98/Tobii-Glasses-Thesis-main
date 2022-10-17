@@ -27,5 +27,5 @@ Then, follow these steps:
 - Request
 
 ### Authors
-* **Alessio Casolaro, Giulio Triggiani** - [AlessioCasolaro](https://github.com/AlessioCasolaro) - [GiulioTriggiani](https://github.com/GiulioTriggiani)
+* **Cataldo Onelia Sara, Paolo Guidotti, Chiara Orrigo** - [Cataldo Onelia Sara](https://github.com/cataldosara98) - 
 
