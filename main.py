@@ -8,6 +8,7 @@ import webbrowser
 from sys import path
 import PySimpleGUI as sg
 import os
+import csv
 
 from numpy.core.fromnumeric import choose
 from readVideo import *
@@ -153,8 +154,9 @@ def main():
                 readData(char)
                 pupilTableViewer(path="out/pupil.csv", pathStats="out/pupilsStatistics.csv")
 
+
+
             elif event == "-KEY2-":  # Creazione/Visualizzazione dei grafici delle fissazioni
-                min2 = sg.popup("Inserire i dati nella console per continuare!")
                 graficFix(char, durEachScen(char))
 
             elif event == "-KEY3-":  # AOI

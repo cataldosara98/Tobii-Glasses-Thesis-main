@@ -1,4 +1,6 @@
 # Funzione per settare i colori, ha come paramentro un int
+
+import PySimpleGUI as sg
 def setColor(color):
 
     if color == 1:
@@ -19,8 +21,8 @@ def setColor(color):
 # Funzione che restituisce i colori di ogni intervallo
 def interChoose():
     # L'utente deve inserire il numero di intervalli che vuole creare
-    n = int(input("Quanti intervalli(max 5): "))
-    print('''Colori nell'elenco:
+    n = int(sg.popup_get_text("Quanti intervalli(max 5): "))
+    sg.popup('''Colori nell'elenco:
         1. Red
         2. Blue
         3. Yellow
@@ -31,7 +33,7 @@ def interChoose():
     col = []                                    # Lista di colori
     # Loop del numero di intervalli per settare il colore ad ogni intervallo
     for i in range(n):
-        color = int(input("Setta il colore per %s intervallo: " % (i+1)))
+        color = int(sg.popup_get_text("Setta il colore per %s intervallo: " % (i+1)))
         col.append(setColor(color))             # Aggiungo il colore alla lista dei colori
     return col
 
