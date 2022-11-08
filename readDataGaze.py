@@ -178,13 +178,11 @@ def graficFix(nImg, scene):
     for i in z1:
         maxZ = i
         minZ = z1[0]
-    choose = sg.popup_get_text('''Scegliere l'opzione da eseguire: 
+    choose = sg.popup_get_text('''Selezionare l'opzione da eseguire: 
                                 1. Settare intervalli uguali
                                 2. Settare intervalli misti
-                                3. Unico intervallo con gradazione dei colori
-                                
-                                Digita l'opzione scelta: 
-                            ''')
+                                3. Unico intervallo con gradazione dei colori  '''
+                            )
 
     while(True):
         if choose != str(1) and choose != str(2) and choose != str(3):

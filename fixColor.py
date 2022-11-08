@@ -21,19 +21,19 @@ def setColor(color):
 # Funzione che restituisce i colori di ogni intervallo
 def interChoose():
     # L'utente deve inserire il numero di intervalli che vuole creare
-    n = int(sg.popup_get_text("Quanti intervalli(max 5): "))
-    sg.popup('''Colori nell'elenco:
-        1. Red
-        2. Blue
-        3. Yellow
-        4. Green
-        5. Black
-        ''')
+    n = int(sg.popup_get_text("Quanti intervalli vuoi creare ?(max 5): "))
 
     col = []                                    # Lista di colori
     # Loop del numero di intervalli per settare il colore ad ogni intervallo
     for i in range(n):
-        color = int(sg.popup_get_text("Setta il colore per %s intervallo: " % (i+1)))
+        color = int(sg.popup_get_text('''Seleziona il colore per il %s° intervallo: 
+        I colori presenti nell'elenco sono:
+                1. Red
+                2. Blue
+                3. Yellow
+                4. Green
+                5. Black
+        '''  % (i+1)))
         col.append(setColor(color))             # Aggiungo il colore alla lista dei colori
     return col
 

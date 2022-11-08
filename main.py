@@ -56,9 +56,9 @@ def main():
 
     # Costruisco il Layout di destra
     right_viewer_column = [
-        [sg.Text("Video scelto:")],
+        [sg.Text("Video selezionato:")],
         [sg.Text(size=(40, 1), key="-TEXTVIDEONAME-")],
-        [sg.Text("Scegli che funzione eseguire:")],
+        [sg.Text("Seleziona la funzione da eseguire:")],
         # [sg.Text(strFun)],
         [sg.Image(key="-IMAGE-")],
         [sg.Button("1. Creazione/Visualizzazione del file pupil.csv", key="-KEY1-", size=(50, 1)
