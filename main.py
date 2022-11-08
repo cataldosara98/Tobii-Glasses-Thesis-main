@@ -1,6 +1,6 @@
 ##############################################################################
 # Progetto di tesi sul dispositivo Tobii Pro Glasses 3
-# Realizzato da Alessio Casolaro, Giulio Triggiani
+# Realizzato da Sara Cataldo, Paolo Guidotti, Chiara Orrigo
 #
 # Relatori Prof.Andrea Francesco Abate, Dott.ssa Lucia Cimmino, Dott.ssa Lucia Cascone
 ##############################################################################
@@ -36,8 +36,7 @@ def main():
                 values=[], enable_events=True, size=(40, 20), key="-FILE LIST-", disabled=True
             )
         ],
-        [sg.Button("MANUALE UTENTE", key="-MANUALE-", size=(30, 1), tooltip="Consulta il manuale utente",
-                   button_color="grey")],
+
 
     ]
 
@@ -84,8 +83,11 @@ def main():
         [sg.Button("9. Creazione Heatmap", key="-KEY9-", size=(50, 1), tooltip="Heatmap")],
         [sg.Button("10. Scanpath Real-time", key="-KEY10-", size=(50, 1), tooltip="Real-time")
          ],
+        [sg.Button("MANUALE UTENTE", key="-MANUALE-", size=(50, 0), tooltip="Consulta il manuale utente", button_color="orange", ) ],
 
     ]
+
+
 
     ##############################################################################
     # Costruisco il Layout Globale
