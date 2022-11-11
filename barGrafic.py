@@ -39,10 +39,11 @@ def chooseGraph(char,scene):
             timePoint = readAoiDbscan2(scene)
             inter, listTime = openGazeData(char,4)
             barGraphAoiDominant(listTime, timePoint)
-        elif choose == "":
-            break
-        else:
-            print("Numero o parola inserita non valida. ")
+        elif choose == choose != str(1) and choose != str(2) and choose != str(3) and choose != str(4) and choose!=(5):
+          sg.popup('''Avviso: 
+                                - Numero inserito non valido
+                                - Uscita dalla funzione  ''')
+        break
     
 
 

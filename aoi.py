@@ -615,8 +615,16 @@ def chooseAlgo(scene,choose):
             event, values = sg.Window('Dettagli grafico AOI', [[sg.Image(filename='grafic/aoi0.png')]]).read(close=True)
             break
 
-        elif choose == str(3):
+        elif choose == choose != str(1) and choose != str(2):
+            sg.popup('''Avviso: 
+                                - Numero inserito non valido
+                                - Uscita dalla funzione  ''')
             break
-        else:
-            print("Numero o parola inserita non valida. ")
+
+
+
+
+
+
+
     return choose
