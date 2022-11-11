@@ -186,10 +186,14 @@ def graficFix(nImg, scene):
 
     while(True):
         if choose != str(1) and choose != str(2) and choose != str(3):
-            print("Numero o parola inserita non valida")
-            choose = input("Ridigita: ")
+            sg.popup('''Avviso: 
+                                - Numero inserito non valido
+                                - Parola inserita non valida
+                                - Uscita dalla funzione  ''')
+            break
         else:
             break
+
     if choose == str(1) or choose == str(2):
         n = interChoose()
     print("All'utente verranno mostrate %d immagini" % nImg)

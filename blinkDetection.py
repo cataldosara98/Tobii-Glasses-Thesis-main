@@ -26,7 +26,7 @@ def blinkDetect():
         a=eyeLF[i]
         if eyeLF[i] == 0 and eyeRG[i] == 0:
             if last_was_0:
-                zero_clusters[-1][-1]+=1
+                zero_clusters[-1][-1] += 1
             else:
                 zero_clusters.append([i, i])
         last_was_0 = a == 0
