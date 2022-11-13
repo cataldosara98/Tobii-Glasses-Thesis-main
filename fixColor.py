@@ -25,19 +25,18 @@ def interChoose():
     # L'utente deve inserire il numero di intervalli che vuole creare
 
 
-    n =(sg.popup_get_text("Quanti intervalli vuoi creare ?(max 5): "))
 
 
 
     while True:
-       if n!=str(1) and n!=str(2) and n!=str(3) and n!=str(4) and n!=str(5):
+     n = (sg.popup_get_text("Quanti intervalli vuoi creare ?(max 5): "))
+     if n!=str(1) and n!=str(2) and n!=str(3) and n!=str(4) and n!=str(5):
+         sg.popup_annoying("Perfavore inserire un valore valido")
 
-         sg.popup_annoying("Chiusura programma per valore non valido")
-         break
-
-       else:
-
+     else:
+        while True:
            col = []  # Lista di colori
+
            for i in range(int(n)):
              color =int(sg.popup_get_text('''Seleziona il colore per il %s° intervallo: 
         I colori presenti nell'elenco sono:
@@ -50,7 +49,7 @@ def interChoose():
 
              if color != int(1) and color != int(2) and color != int(3) and color != int(4) and color != int(5):
 
-                   sg.popup_annoying("Vaolore non valido,chiusura del programma")
+                   sg.popup_annoying("Perfavore inserire un valore valido")
 
              else:
                    col.append(setColor(color))
@@ -67,7 +66,7 @@ def durInter(num,time, scene):
     listInter = []                                  # Lista dei limiti degli intervalli
     listInter.append(time)                          # Aggiungo il primo limite alla lista
     for i in range(num):
-        print("Scegli tra %s e  %s:" %(listInter[i], scene))
+        sg.popup_get_text("Scegli tra %s e  %s:" %(listInter[i], scene))
 
         # Controllo se è l'ultima iterazione
         # Se è l'ultima allora restituisco nella variable help1 il tempo massimo
@@ -76,11 +75,11 @@ def durInter(num,time, scene):
             help1 = scene
         else:
             while(True):
-                help1 = float(input("Digita: "))
+                help1 = float(sg.popup_get_text("Digita: "))
                 if help1 >= listInter[i] and help1 <= scene:
                     break
                 else:
-                    print("Numero inserito non valido")
+                    sg.popup_annoying("Numero inserito non valido")
         listInter.append(help1)                       # Aggiungo il numero nella lista
 
     return listInter
