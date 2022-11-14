@@ -190,9 +190,11 @@ def graficFix(nImg, scene):
                                 - Numero inserito non valido
                                 - Parola inserita non valida
                                 - Uscita dalla funzione  ''')
+
             break
         else:
             break
+
 
     if choose == str(1) or choose == str(2):
         n = interChoose()
