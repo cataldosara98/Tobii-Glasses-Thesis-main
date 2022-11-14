@@ -62,7 +62,7 @@ def interChoose():
                    color=color1
 
 
-                   col.append(setColor(color))
+             col.append(setColor(color))
            return col
 
 
