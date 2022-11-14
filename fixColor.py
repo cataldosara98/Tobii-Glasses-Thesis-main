@@ -50,8 +50,18 @@ def interChoose():
              if color != int(1) and color != int(2) and color != int(3) and color != int(4) and color != int(5):
 
                    sg.popup_annoying("Perfavore inserire un valore valido")
+                   print(i-1)
+                   color1 = int(sg.popup_get_text('''Seleziona il colore per il %s° intervallo: 
+                       I colori presenti nell'elenco sono:
+                               1. Red
+                               2. Blue
+                               3. Yellow
+                               4. Green
+                               5. Black
+                       ''' % (i + 1)))
+                   color=color1
 
-             else:
+
                    col.append(setColor(color))
            return col
 
