@@ -62,7 +62,7 @@ def main():
         # [sg.Text(strFun)],
         [sg.Image(key="-IMAGE-")],
         [sg.Button("1. Creazione/Visualizzazione del file pupil.csv", key="-KEY1-", size=(50, 1)
-                   , tooltip="il file .csv contiene il diametro dell’occhio destro e \n"
+                   , tooltip="Il file .csv contiene il diametro dell’occhio destro e \n"
                              "del sinistro e la loro media con l’istante di tempo in cui è \n"
                              "stata effettuata la misurazione")],
         [sg.Button("2. Creazione/Visualizzazione dei grafici delle fissazioni", key="-KEY2-", size=(50, 1),
@@ -154,7 +154,7 @@ def main():
                 print(pathVideo)
                 print(nameVideo)
                 readData(char)
-                pupilTableViewer(path="out/pupil.csv", pathStats="out/pupilsStatistics.csv")
+                pupilTableViewer(path="out/pupil.csv", pathStats="out/pupilsStatistics.csv", task1="out/task1.csv")
 
 
 
@@ -207,7 +207,7 @@ def main():
     window.close()
 
 
-def pupilTableViewer(path, pathStats):
+def pupilTableViewer(path, pathStats, task1):
     # Popola la tabella con i dati
     data = []
     header_list = []
@@ -226,7 +226,19 @@ def pupilTableViewer(path, pathStats):
 
     if pathStats is not None:
         try:
-            df2 = pd.read_csv(pathStats, sep=',', engine='python', header=None)
+            df3 = pd.read_csv(pathStats, sep=',', engine='python', header=None)
+            data3 = df3.values.tolist()
+
+            header_list3 = df3.iloc[0].tolist()
+
+            data3 = df3[1:].values.tolist()
+
+        except:
+            sg.popup_error('Errore lettura file pupilsStatistics.csv')
+
+    if task1 is not None:
+        try:
+            df2 = pd.read_csv(task1, sep=',', engine='python', header=None)
             data2 = df2.values.tolist()
 
             header_list2 = df2.iloc[0].tolist()
@@ -234,10 +246,18 @@ def pupilTableViewer(path, pathStats):
             data2 = df2[1:].values.tolist()
 
         except:
-            sg.popup_error('Errore lettura file pupilsStatistics.csv')
+            sg.popup_error('Errore lettura file task1.csv')
 
     layout = [
-        [sg.Text("Statistiche pupille:")],
+        [sg.Text("Statistiche totali pupille:")],
+        [sg.Table(values=data3,
+                  headings=header_list3,
+                  display_row_numbers=True,
+                  auto_size_columns=True,
+                  hide_vertical_scroll=True,
+                  vertical_scroll_only=False,
+                  num_rows=2)],
+        [sg.Text("Task 1_1")],
         [sg.Table(values=data2,
                   headings=header_list2,
                   display_row_numbers=True,
@@ -245,7 +265,7 @@ def pupilTableViewer(path, pathStats):
                   hide_vertical_scroll=True,
                   vertical_scroll_only=False,
                   num_rows=2)],
-        [sg.Text("Tabella informazioni pupille:")],
+        [sg.Text("Tabella completa informazioni pupille:")],
         [sg.Table(values=data,
                   headings=header_list,
                   display_row_numbers=True,
