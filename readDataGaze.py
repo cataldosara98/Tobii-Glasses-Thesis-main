@@ -105,7 +105,35 @@ def readData(char):
             for stime,diamLF,diamRG, average in zip(time,eyeLFdiameter,eyeRGdiameter, averageLFRG):
                raw = {'Timestamp':stime, 'EyeLeftDiameter': diamLF, 'EyeRightDiameter': diamRG, 'AverageLeftAndRight':average}
                w.writerow(raw)
-            
+
+        #Task 1
+
+        mdimRG = 0;
+        mdimLF = 0;
+
+        # Massimo diametro pupilla destra e sinistra in intervallo 22 - 29 secondi
+        for x, y, z in zip(time, eyeRGdiameter, eyeLFdiameter):
+            if x > 21 and x < 30:
+                if(mdimRG < y):
+                    mdimRG = y
+                if (mdimLF < z):
+                    mdimLF = z
+
+        diff = diffLeftRight(mdimLF, mdimRG)
+
+        # fields1 è una lista avente i nomi dei campi del nuovo file csv
+        fields1 = ['MaxEyeLeftDiameter', 'MaxEyeRightDiameter', 'Differential']
+
+        # Creazione e apertura del file di nome task1.csv
+        with open('out/task1.csv', 'w', newline="") as csvTask1:
+
+            # w1 è una dictionary con i campi della lista fields
+            w1 = cs.DictWriter(csvTask1, fieldnames=fields1, delimiter=',')
+            w1.writeheader()
+
+            # Inserisco i valori nei campi del dictionary
+            w1.writerow({'MaxEyeLeftDiameter': mdimLF, 'MaxEyeRightDiameter': mdimRG, 'Differential': diff})
+
         # Apertura del file di nome pupil.csv in modalità append
         with open('out/pupilsStatistics.csv', 'w', newline="") as csvPupilStat:
 
@@ -124,7 +152,7 @@ def readData(char):
 
         readFilePupil()
         csvPupilStat.close()  # Chiusura del file
-
+        csvTask1.close()  # Chiusura del file
 
         #*********************************************************************************************************#
         #Richiamo la fnuzione fixation per computare le fissazioni

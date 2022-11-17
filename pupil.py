@@ -37,3 +37,11 @@ def minmaxLeftAndRight(diameterLF,diameterRG):
 #Cacolo Velocità media dilatazione
 def avgDilatationSpeed(initialDil,finalDil,initialT,finalT):
     return (finalDil-initialDil)/(finalT-initialT)
+
+
+#Calcolo differenziale a il diametro minimo nella prima parte dell’esposizione e il diametro massimo nella seconda metà
+def diffLeftRight(diameterLF, diameterRG) :
+    diff = diameterLF - diameterRG
+    diff1 = diameterRG - diameterLF
+    return max(diff, diff1)
+
