@@ -108,8 +108,8 @@ def readData(char):
 
         #Task 1
 
-        mdimRG = 0;
-        mdimLF = 0;
+        mdimRG = 0
+        mdimLF = 0
 
         # Massimo diametro pupilla destra e sinistra in intervallo 22 - 29 secondi
         for x, y, z in zip(time, eyeRGdiameter, eyeLFdiameter):
