@@ -2,7 +2,26 @@ import cv2
 import pandas as pd
 import tkinter as tk
 import keyboard
+import PySimpleGUI as sg
 
+def chooseScanpath(char, pathVideo):
+    while True:
+
+        #choose = input("Digita l'opzione scelta: ")
+        choose = sg.popup_get_text('''Quale Scanpath vuoi creare e visualizzare?
+        1. Scanpath Real-Time
+        2. Scanpath finale
+        ''', )
+        if choose == str(1):
+            path = pathVideo
+            generateScanpath(path)
+        elif choose == str(2):
+            sg.popup('''VISUALIZZA SCANPATH FINALE ''')
+        elif choose == choose != str(1) and choose != str(2) :
+          sg.popup('''Avviso: 
+         - Il numero scelto non è non valido ;
+         - Uscita dalla funzione  ''')
+        break
 def generateScanpath(path):
     # dati del grafico fixation
     csv_file = 'out/fixation.csv'

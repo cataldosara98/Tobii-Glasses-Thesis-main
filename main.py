@@ -65,15 +65,16 @@ def main():
                    , tooltip="Il file .csv contiene il diametro dell’occhio destro e \n"
                              "del sinistro e la loro media con l’istante di tempo in cui è \n"
                              "stata effettuata la misurazione")],
-        [sg.Button("2. Creazione/Visualizzazione dei grafici delle fissazioni", key="-KEY2-", size=(50, 1),
-                   tooltip="Grafici delle fissazioni")],
+        [sg.Button("2. Scanpath", key="-KEY2-", size=(50, 1), tooltip="Scanpath Real-Time e Scanpath finale")],
+        #[sg.Button("2. Creazione/Visualizzazione dei grafici delle fissazioni", key="-KEY2-", size=(50, 1),
+                   #tooltip="Grafici delle fissazioni")],
         [sg.Button("3. Creazione del file aoi.csv e visualizzazione dei grafici", key="-KEY3-", size=(50, 1),
                    tooltip="aoi.csv e grafici")],
         [sg.Button("4. Visualizzazione dei grafici a barre", key="-KEY4-", size=(50, 1), tooltip="Grafici a barre")],
         [sg.Button("5. Creazione/Visualizzazione dei file fixation.csv", key="-KEY5-", size=(50, 1),
                    tooltip="un file .csv che contiene i dati relativi alle fissazioni con tempo di inizio,\n"
                            "durata e posizione calcolata sui tre assi x, y e z")],
-        [sg.Button("6. Disegna Scanpath", key="-KEY6-", size=(50, 1), tooltip="Scanpath")],
+        #[sg.Button("6. Disegna Scanpath", key="-KEY6-", size=(50, 1), tooltip="Scanpath")],
         [sg.Button("7. Creazione del file blinkDetected.csv", key="-KEY7-", size=(50, 1),
                    tooltip="il file .csv contiene i dati relativi \n"
                            "ai blink rilevati durante il \n"
@@ -158,8 +159,8 @@ def main():
 
 
 
-            elif event == "-KEY2-":  # Creazione/Visualizzazione dei grafici delle fissazioni
-                graficFix(char, durEachScen(char))
+           # elif event == "-KEY2-":  # Creazione/Visualizzazione dei grafici delle fissazioni
+               # graficFix(char, durEachScen(char))
 
             elif event == "-KEY3-":  # AOI
                 print(
@@ -180,8 +181,9 @@ def main():
                 readData(char)
                 tableViewer(path="out/fixation.csv")
 
-            elif event == "-KEY6-":  # Disegna Scanpath
-                generateScanpath(pathVideo)
+            elif event == "-KEY2-":  # Disegna Scanpath
+                chooseScanpath(char, pathVideo)
+                #generateScanpath(pathVideo)
 
             elif event == "-KEY7-":  # Creazione del file blinkDetected.csv
                 blinkDetect()
