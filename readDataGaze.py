@@ -342,7 +342,7 @@ def readData(char):
                 dmax = max(minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[2], minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[3])
                 dif = diffLeftRight(minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[2], minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[3])
 
-        # Diametro pupilla destra e sinistra a riposo da 86 a 88
+        # Diametro pupilla destra e sinistra a riposo da 86 a
         for x, y, z in zip(time, eyeRGdiameter, eyeLFdiameter):
             if x > 85  and x < 89:
                 dRG1 = y
