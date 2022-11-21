@@ -154,7 +154,7 @@ def main():
                 print(pathVideo)
                 print(nameVideo)
                 readData(char)
-                pupilTableViewer(path="out/pupil.csv", pathStats="out/pupilsStatistics.csv", task1="out/task1.csv")
+                pupilTableViewer(path="out/pupil.csv", pathStats="out/pupilsStatistics.csv", task1="out/task1.csv", task2="out/task2.csv", task3="out/task3.csv")
 
 
 
@@ -207,7 +207,7 @@ def main():
     window.close()
 
 
-def pupilTableViewer(path, pathStats, task1):
+def pupilTableViewer(path, pathStats, task1, task2, task3):
     # Popola la tabella con i dati
     data = []
     header_list = []
@@ -248,6 +248,30 @@ def pupilTableViewer(path, pathStats, task1):
         except:
             sg.popup_error('Errore lettura file task1.csv')
 
+    if task2 is not None:
+        try:
+            df4 = pd.read_csv(task2, sep=',', engine='python', header=None)
+            data4 = df4.values.tolist()
+
+            header_list4 = df4.iloc[0].tolist()
+
+            data4 = df4[1:].values.tolist()
+
+        except:
+            sg.popup_error('Errore lettura file task2.csv')
+
+    if task3 is not None:
+        try:
+            df5 = pd.read_csv(task3, sep=',', engine='python', header=None)
+            data5 = df5.values.tolist()
+
+            header_list5 = df5.iloc[0].tolist()
+
+            data5 = df5[1:].values.tolist()
+
+        except:
+            sg.popup_error('Errore lettura file task3.csv')
+
     layout = [
         [sg.Text("Statistiche totali pupille:")],
         [sg.Table(values=data3,
@@ -257,14 +281,30 @@ def pupilTableViewer(path, pathStats, task1):
                   hide_vertical_scroll=True,
                   vertical_scroll_only=False,
                   num_rows=2)],
-        [sg.Text("Task 1_1")],
+        [sg.Text("Task 1:")],
         [sg.Table(values=data2,
                   headings=header_list2,
                   display_row_numbers=True,
                   auto_size_columns=True,
                   hide_vertical_scroll=True,
                   vertical_scroll_only=False,
-                  num_rows=2)],
+                  num_rows=1)],
+        [sg.Text("Task 2:")],
+        [sg.Table(values=data4,
+                  headings=header_list4,
+                  display_row_numbers=True,
+                  auto_size_columns=True,
+                  hide_vertical_scroll=True,
+                  vertical_scroll_only=False,
+                  num_rows=1)],
+        [sg.Text("Task 3:")],
+        [sg.Table(values=data5,
+                  headings=header_list5,
+                  display_row_numbers=True,
+                  auto_size_columns=True,
+                  hide_vertical_scroll=True,
+                  vertical_scroll_only=False,
+                  num_rows=1)],
         [sg.Text("Tabella completa informazioni pupille:")],
         [sg.Table(values=data,
                   headings=header_list,
