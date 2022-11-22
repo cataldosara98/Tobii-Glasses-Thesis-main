@@ -80,7 +80,6 @@ def readData(char):
                 positionX.append(gaze2d[0])  # lista coordinata x
                 positionY.append(gaze2d[1])  # lista coordinata y
                 positionZ.append(gaze3d[2])  # lista coordinata z
-       
 
         # for per iterare su ciascun diametro di ogni istante
         for diamLF,diamRG in zip(eyeLFdiameter,eyeRGdiameter):
@@ -107,55 +106,10 @@ def readData(char):
                w.writerow(raw)
 
         #Task 1
-
-        mdimRG = 0
-        mdimLF = 0
-        mdimRG1 = 0
-        mdimLF1 = 0
-        mdimRG2 = 0
-        mdimLF2 = 0
-        mdimRG3 = 0
-        mdimLF3 = 0
-
-        # Massimo diametro pupilla destra e sinistra in intervallo 22 - 27 secondi
-        for x, y, z in zip(time, eyeRGdiameter, eyeLFdiameter):
-            if x > 21 and x < 28:
-                if(mdimRG < y):
-                    mdimRG = y
-                if (mdimLF < z):
-                    mdimLF = z
-
-        diff = diffLeftRight(mdimLF, mdimRG)
-
-        # Massimo diametro pupilla destra e sinistra in intervallo 30 - 35 secondi
-        for x1, y1, z1 in zip(time, eyeRGdiameter, eyeLFdiameter):
-            if x1 > 29 and x1 < 36:
-                if (mdimRG1 < y1):
-                    mdimRG1 = y1
-                if (mdimLF1 < z1):
-                    mdimLF1 = z1
-
-        diff1 = diffLeftRight(mdimLF1, mdimRG1)
-
-        # Massimo diametro pupilla destra e sinistra in intervallo 38 - 43 secondi
-        for x2, y2, z2 in zip(time, eyeRGdiameter, eyeLFdiameter):
-            if x1 > 37 and x1 < 44:
-                if (mdimRG2 < y2):
-                    mdimRG2 = y2
-                if (mdimLF2 < z2):
-                    mdimLF2 = z2
-
-        diff2 = diffLeftRight(mdimLF2, mdimRG2)
-
-        # Massimo diametro pupilla destra e sinistra in intervallo 46 - 51 secondi
-        for x3, y3, z3 in zip(time, eyeRGdiameter, eyeLFdiameter):
-            if x3 > 45 and x3 < 52:
-                if (mdimRG3 < y3):
-                    mdimRG3 = y3
-                if (mdimLF3 < z3):
-                    mdimLF3 = z3
-
-        diff3 = diffLeftRight(mdimLF3, mdimRG3)
+        diff = diffLeftRight(maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 22, 27)[1], maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 22, 27)[0])
+        diff1 = diffLeftRight(maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 27, 32)[1], maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 27, 32)[0])
+        diff2 = diffLeftRight(maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 32, 37)[1], maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 32, 37)[0])
+        diff3 = diffLeftRight(maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 37, 42)[1], maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 37, 42)[0])
 
         # fields1 è una lista avente i nomi dei campi del nuovo file csv
         fields1 = ['Img', 'MaxEyeLeftDiameter', 'MaxEyeRightDiameter', 'Differential']
@@ -168,215 +122,32 @@ def readData(char):
             w1.writeheader()
 
             # Inserisco i valori nei campi del dictionary
-            w1.writerow({'Img': "T1_01",'MaxEyeLeftDiameter': mdimLF, 'MaxEyeRightDiameter': mdimRG, 'Differential': diff})
-            w1.writerow({'Img': "T1_02",'MaxEyeLeftDiameter': mdimLF1, 'MaxEyeRightDiameter': mdimRG1, 'Differential': diff1})
-            w1.writerow({'Img': "T1_03",'MaxEyeLeftDiameter': mdimLF2, 'MaxEyeRightDiameter': mdimRG2, 'Differential': diff2})
-            w1.writerow({'Img': "T1_04",'MaxEyeLeftDiameter': mdimLF3, 'MaxEyeRightDiameter': mdimRG3, 'Differential': diff3})
+            w1.writerow({'Img': "T1_01",'MaxEyeLeftDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 22, 27)[1], 'MaxEyeRightDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 22, 27)[0], 'Differential': diff})
+            w1.writerow({'Img': "T1_02",'MaxEyeLeftDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 27, 32)[1], 'MaxEyeRightDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 27, 32)[0], 'Differential': diff1})
+            w1.writerow({'Img': "T1_03",'MaxEyeLeftDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 32, 37)[1], 'MaxEyeRightDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 32, 37)[0], 'Differential': diff2})
+            w1.writerow({'Img': "T1_04",'MaxEyeLeftDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 37, 42)[1], 'MaxEyeRightDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 37, 42)[0], 'Differential': diff3})
 
-            # Task 1
+        # Task 2
 
-            mdimRG = 0
-            mdimLF = 0
-            mdimRG1 = 0
-            mdimLF1 = 0
-            mdimRG2 = 0
-            mdimLF2 = 0
-            mdimRG3 = 0
-            mdimLF3 = 0
+        diff = diffLeftRight(maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 42, 46)[1], maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 42, 46)[0])
+        diff1 = diffLeftRight(maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 46, 50)[1], maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 46, 50)[0])
+        diff2 = diffLeftRight(maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 50, 54)[1], maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 50, 54)[0])
+        diff3 = diffLeftRight(maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 54, 58)[1], maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 54, 58)[0])
 
-            # Massimo diametro pupilla destra e sinistra in intervallo 22 - 27 secondi
-            for x, y, z in zip(time, eyeRGdiameter, eyeLFdiameter):
-                if x > 21 and x < 28:
-                    if (mdimRG < y):
-                        mdimRG = y
-                    if (mdimLF < z):
-                        mdimLF = z
+        # Creazione e apertura del file di nome task2.csv
+        with open('out/task2.csv', 'w', newline="") as csvTask2:
 
-            diff = diffLeftRight(mdimLF, mdimRG)
+            # w2 è una dictionary con i campi della lista fields
+            w2 = cs.DictWriter(csvTask2, fieldnames=fields1, delimiter=',')
+            w2.writeheader()
 
-            # Massimo diametro pupilla destra e sinistra in intervallo 30 - 35 secondi
-            for x1, y1, z1 in zip(time, eyeRGdiameter, eyeLFdiameter):
-                if x1 > 29 and x1 < 36:
-                    if (mdimRG1 < y1):
-                        mdimRG1 = y1
-                    if (mdimLF1 < z1):
-                        mdimLF1 = z1
+            # Inserisco i valori nei campi del dictionary
+            w2.writerow({'Img': "T2_01", 'MaxEyeLeftDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 42, 46)[1], 'MaxEyeRightDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 42, 46)[0], 'Differential': diff})
+            w2.writerow({'Img': "T2_02", 'MaxEyeLeftDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 46, 50)[1], 'MaxEyeRightDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 46, 50)[0], 'Differential': diff1})
+            w2.writerow({'Img': "T2_03", 'MaxEyeLeftDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 50, 54)[1], 'MaxEyeRightDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 50, 54)[0], 'Differential': diff2})
+            w2.writerow({'Img': "T2_04", 'MaxEyeLeftDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 54, 58)[1], 'MaxEyeRightDiameter': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 54, 58)[0],'Differential': diff3})
 
-            diff1 = diffLeftRight(mdimLF1, mdimRG1)
-
-            # Massimo diametro pupilla destra e sinistra in intervallo 38 - 43 secondi
-            for x2, y2, z2 in zip(time, eyeRGdiameter, eyeLFdiameter):
-                if x1 > 37 and x1 < 44:
-                    if (mdimRG2 < y2):
-                        mdimRG2 = y2
-                    if (mdimLF2 < z2):
-                        mdimLF2 = z2
-
-            diff2 = diffLeftRight(mdimLF2, mdimRG2)
-
-            # Massimo diametro pupilla destra e sinistra in intervallo 46 - 51 secondi
-            for x3, y3, z3 in zip(time, eyeRGdiameter, eyeLFdiameter):
-                if x3 > 45 and x3 < 52:
-                    if (mdimRG3 < y3):
-                        mdimRG3 = y3
-                    if (mdimLF3 < z3):
-                        mdimLF3 = z3
-
-            diff3 = diffLeftRight(mdimLF3, mdimRG3)
-
-            # fields1 è una lista avente i nomi dei campi del nuovo file csv
-            fields1 = ['Img', 'MaxEyeLeftDiameter', 'MaxEyeRightDiameter', 'Differential']
-
-            # Creazione e apertura del file di nome task1.csv
-            with open('out/task1.csv', 'w', newline="") as csvTask1:
-
-                # w1 è una dictionary con i campi della lista fields
-                w1 = cs.DictWriter(csvTask1, fieldnames=fields1, delimiter=',')
-                w1.writeheader()
-
-                # Inserisco i valori nei campi del dictionary
-                w1.writerow(
-                    {'Img': "T1_01", 'MaxEyeLeftDiameter': mdimLF, 'MaxEyeRightDiameter': mdimRG, 'Differential': diff})
-                w1.writerow({'Img': "T1_02", 'MaxEyeLeftDiameter': mdimLF1, 'MaxEyeRightDiameter': mdimRG1,
-                             'Differential': diff1})
-                w1.writerow({'Img': "T1_03", 'MaxEyeLeftDiameter': mdimLF2, 'MaxEyeRightDiameter': mdimRG2,
-                             'Differential': diff2})
-                w1.writerow({'Img': "T1_04", 'MaxEyeLeftDiameter': mdimLF3, 'MaxEyeRightDiameter': mdimRG3,
-                             'Differential': diff3})
-
-            # Task 2
-
-            mdimRG = 0
-            mdimLF = 0
-            mdimRG1 = 0
-            mdimLF1 = 0
-            mdimRG2 = 0
-            mdimLF2 = 0
-            mdimRG3 = 0
-            mdimLF3 = 0
-
-            # Massimo diametro pupilla destra e sinistra in intervallo 53 - 57 secondi
-            for x, y, z in zip(time, eyeRGdiameter, eyeLFdiameter):
-                if x > 52 and x < 58:
-                    if (mdimRG < y):
-                        mdimRG = y
-                    if (mdimLF < z):
-                        mdimLF = z
-
-            diff = diffLeftRight(mdimLF, mdimRG)
-
-            # Massimo diametro pupilla destra e sinistra in intervallo 60 - 64 secondi
-            for x1, y1, z1 in zip(time, eyeRGdiameter, eyeLFdiameter):
-                if x1 > 59 and x1 < 65:
-                    if (mdimRG1 < y1):
-                        mdimRG1 = y1
-                    if (mdimLF1 < z1):
-                        mdimLF1 = z1
-
-            diff1 = diffLeftRight(mdimLF1, mdimRG1)
-
-            # Massimo diametro pupilla destra e sinistra in intervallo 68 - 72 secondi
-            for x2, y2, z2 in zip(time, eyeRGdiameter, eyeLFdiameter):
-                if x1 > 67 and x1 < 73:
-                    if (mdimRG2 < y2):
-                        mdimRG2 = y2
-                    if (mdimLF2 < z2):
-                        mdimLF2 = z2
-
-            diff2 = diffLeftRight(mdimLF2, mdimRG2)
-
-            # Massimo diametro pupilla destra e sinistra in intervallo 75 - 79 secondi
-            for x3, y3, z3 in zip(time, eyeRGdiameter, eyeLFdiameter):
-                if x3 > 74 and x3 < 80:
-                    if (mdimRG3 < y3):
-                        mdimRG3 = y3
-                    if (mdimLF3 < z3):
-                        mdimLF3 = z3
-
-            diff3 = diffLeftRight(mdimLF3, mdimRG3)
-
-            # Creazione e apertura del file di nome task2.csv
-            with open('out/task2.csv', 'w', newline="") as csvTask2:
-
-                # w2 è una dictionary con i campi della lista fields
-                w2 = cs.DictWriter(csvTask2, fieldnames=fields1, delimiter=',')
-                w2.writeheader()
-
-                # Inserisco i valori nei campi del dictionary
-                w2.writerow({'Img': "T2_01", 'MaxEyeLeftDiameter': mdimLF, 'MaxEyeRightDiameter': mdimRG,
-                             'Differential': diff})
-                w2.writerow({'Img': "T2_02", 'MaxEyeLeftDiameter': mdimLF1, 'MaxEyeRightDiameter': mdimRG1,
-                             'Differential': diff1})
-                w2.writerow({'Img': "T2_03", 'MaxEyeLeftDiameter': mdimLF2, 'MaxEyeRightDiameter': mdimRG2,
-                             'Differential': diff2})
-                w2.writerow({'Img': "T2_04", 'MaxEyeLeftDiameter': mdimLF3, 'MaxEyeRightDiameter': mdimRG3,
-                             'Differential': diff3})
         #Task 3
-        dRG = 0
-        dRG1 = 0
-        dRG2 = 0
-        dRG3 = 0
-        dLF = 0
-        dLF1 = 0
-        dLF2 = 0
-        dLF3 = 0
-        dmax = 0
-        dmax1 = 0
-        dmax2 = 0
-        dmax3 = 0
-        dif = 0
-        dif1 = 0
-        dif2 = 0
-        dif3 = 0
-
-
-        #Diametro pupilla destra e sinistra a riposo intervallo da 79 a 81
-        for x, y, z in zip(time, eyeRGdiameter, eyeLFdiameter):
-            if x > 78  and x < 82:
-                dRG = y
-                dLF = z
-
-        # Diametro massimo totale intervallo da 81 a 85
-        for x, y, z in zip(time, eyeRGdiameter, eyeLFdiameter):
-            if x > 80 and x < 86:
-                dmax = max(minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[2], minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[3])
-                dif = diffLeftRight(minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[2], minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[3])
-
-        # Diametro pupilla destra e sinistra a riposo da 86 a
-        for x, y, z in zip(time, eyeRGdiameter, eyeLFdiameter):
-            if x > 85  and x < 89:
-                dRG1 = y
-                dLF1 = z
-
-        # Diametro massimo totale intervallo da 89 a 94
-        for x, y, z in zip(time, eyeRGdiameter, eyeLFdiameter):
-            if x > 88 and x < 95:
-                dmax1 = max(minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[2], minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[3])
-                dif1 = diffLeftRight(minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[2], minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[3])
-
-        # Diametro pupilla destra e sinistra a riposo da 94 a 96
-        for x, y, z in zip(time, eyeRGdiameter, eyeLFdiameter):
-            if x > 93  and x < 97:
-                dRG2 = y
-                dLF2 = z
-
-        # Diametro massimo totale intervallo da 96 a 100
-        for x, y, z in zip(time, eyeRGdiameter, eyeLFdiameter):
-            if x > 95 and x < 101:
-                dmax2 = max(minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[2], minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[3])
-                dif2 = diffLeftRight(minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[2], minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[3])
-
-        # Diametro pupilla destra e sinistra a riposo da 101 a 103
-        for x, y, z in zip(time, eyeRGdiameter, eyeLFdiameter):
-            if x > 100  and x < 104:
-                dRG3 = y
-                dLF3 = z
-
-        # Diametro massimo totale intervallo da 101 a 107
-        for x, y, z in zip(time, eyeRGdiameter, eyeLFdiameter):
-            if x > 100 and x < 106:
-                dmax3 = max(minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[2], minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[3])
-                dif3 = diffLeftRight(minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[2], minmaxLeftAndRight(eyeLFdiameter, eyeRGdiameter)[3])
 
         # fields2 è una lista avente i nomi dei campi del nuovo file csv
         fields2 = ['Img', 'DiamRipRG', 'DiamRipLF', 'DiamMax', 'DiffMinMax', 'DiamAvg']
@@ -388,10 +159,10 @@ def readData(char):
             w3.writeheader()
 
             # Inserisco i valori nei campi del dictionary
-            w3.writerow({'Img': "T3_01", 'DiamRipRG': dRG, 'DiamRipLF': dLF, 'DiamMax': dmax, 'DiffMinMax': dif})
-            w3.writerow({'Img': "T3_02", 'DiamRipRG': dRG1, 'DiamRipLF': dLF1, 'DiamMax': dmax1, 'DiffMinMax': dif1})
-            w3.writerow({'Img': "T3_03", 'DiamRipRG': dRG2, 'DiamRipLF': dLF2, 'DiamMax': dmax2, 'DiffMinMax': dif2})
-            w3.writerow({'Img': "T3_04", 'DiamRipRG': dRG3, 'DiamRipLF': dLF3, 'DiamMax': dmax3, 'DiffMinMax': dif3})
+            w3.writerow({'Img': "T3_01", 'DiamRipRG': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 54, 56)[0], 'DiamRipLF': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 54, 56)[1], 'DiamMax': dmaxTot(time, eyeRGdiameter, eyeLFdiameter, 56, 60), 'DiffMinMax': rispPup(time, eyeRGdiameter, eyeLFdiameter, 56, 60), 'DiamAvg': diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, 56, 60)})
+            w3.writerow({'Img': "T3_02", 'DiamRipRG': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 60, 62)[0], 'DiamRipLF': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 60, 62)[1], 'DiamMax': dmaxTot(time, eyeRGdiameter, eyeLFdiameter, 62, 66), 'DiffMinMax': rispPup(time, eyeRGdiameter, eyeLFdiameter, 62, 66), 'DiamAvg': diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, 62, 66)})
+            w3.writerow({'Img': "T3_03", 'DiamRipRG': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 66, 68)[0], 'DiamRipLF': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 66, 68)[1], 'DiamMax': dmaxTot(time, eyeRGdiameter, eyeLFdiameter, 68, 72), 'DiffMinMax': rispPup(time, eyeRGdiameter, eyeLFdiameter, 68, 72), 'DiamAvg': diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, 68, 72)})
+            w3.writerow({'Img': "T3_04", 'DiamRipRG': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 72, 74)[0], 'DiamRipLF': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 72, 74)[1], 'DiamMax': dmaxTot(time, eyeRGdiameter, eyeLFdiameter, 76, 80), 'DiffMinMax': rispPup(time, eyeRGdiameter, eyeLFdiameter, 76, 80), 'DiamAvg': diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, 76, 80)})
 
         # Apertura del file di nome pupil.csv in modalità append
         with open('out/pupilsStatistics.csv', 'w', newline="") as csvPupilStat:
