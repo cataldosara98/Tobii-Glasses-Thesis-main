@@ -97,3 +97,5 @@ def diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, t1, t2) :
                 a.append(av)
                 avg = sum(a)/len(a)
     return avg
+
+
