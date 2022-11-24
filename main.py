@@ -4,11 +4,14 @@
 #
 # Relatori Prof.Andrea Francesco Abate, Dott.ssa Lucia Cimmino, Dott.ssa Lucia Cascone
 ##############################################################################
+import tkinter
 import webbrowser
 from sys import path
 import PySimpleGUI as sg
 import os
 import csv
+import time
+import threading
 
 from numpy.core.fromnumeric import choose
 from readVideo import *
@@ -19,7 +22,8 @@ from scanpath import *
 from blinkDetection import *
 from heatmap import *
 from online import *
-from tkinter import *
+from tkinter import  *
+
 
 
 def main():
@@ -107,6 +111,25 @@ def main():
 
     ##############################################################################
 
+    def creazioneFile(): #funzione per creare il file pupil.csv e progress bar
+
+        label.config(text="Il file pupil.csv è stato creato")
+        for i in range(3000):
+            if not sg.one_line_progress_meter('My 1-line progress meter',
+                                              i + 1, 3000,
+                                              'Creazione file pupil.csv',
+                                              'Attendere ... ',
+                                              orientation='v'):
+                print('Hit the break')
+
+                break
+        print("Visualizzazione e creazione del file pupil.csv")
+        print(pathVideo)
+        print(nameVideo)
+        readData(char)
+        pupilTableViewer(path="out/pupil.csv", pathStats="out/pupilsStatistics.csv", task1="out/task1.csv",task2="out/task2.csv", task3="out/task3.csv")
+
+
     while True:
         event, values = window.read()  # Leggo gli eventi
         if event == sg.WIN_CLOSED:  # Se l'utente chiude la finestra, break
@@ -150,17 +173,19 @@ def main():
                 resImage(nameVideo, char)
                 streamVideo(nameVideo)
 
-            elif event == "-KEY1-":  # Creazione/Visualizzazione del file pupil.csv
-                print("Visualizzazione e creazione del file pupil.csv")
-                print(pathVideo)
-                print(nameVideo)
-                readData(char)
-                pupilTableViewer(path="out/pupil.csv", pathStats="out/pupilsStatistics.csv", task1="out/task1.csv", task2="out/task2.csv", task3="out/task3.csv")
 
+            elif event == "-KEY1-":# Creazione/Visualizzazione del file pupil.csv
+                mainwindow = tkinter.Tk()
+                mainwindow.title("pupil.csv")
 
+                label = tkinter.Label(mainwindow, text = "Premi sul button per creare pupil.csv", font=("Arial", 22))
+                label.pack()
 
-           # elif event == "-KEY2-":  # Creazione/Visualizzazione dei grafici delle fissazioni
-               # graficFix(char, durEachScen(char))
+                button = tkinter.Button(mainwindow, text="Press me ", command= lambda : threading.Thread(target=creazioneFile()).start())
+                button.pack()
+
+                mainwindow.mainloop()
+
 
             elif event == "-KEY3-":  # AOI
                 print(
@@ -215,13 +240,15 @@ def pupilTableViewer(path, pathStats, task1, task2, task3):
     header_list = []
     if path is not None:  # Controlla se il path del file pupil.csv è corretto
         try:
+
             df = pd.read_csv(path, sep=',', engine='python', header=None)
-            data = df.values.tolist()  # Converte tutti i dati in una lista
+            data = df.values.tolist() # Converte tutti i dati in una lista
 
             # La prima riga rappresenta l'header del file csv
             header_list = df.iloc[0].tolist()
             # Dopo la prima riga le altre sono semplici righe
             data = df[1:].values.tolist()
+
 
         except:
             sg.popup_error('Errore lettura file pupil.csv')
@@ -333,6 +360,8 @@ def tableViewer(path):
             header_list = df.iloc[0].tolist()
             # Dopo la prima riga le altre sono semplici righe
             data = df[1:].values.tolist()
+
+
 
         except:
             sg.popup_error('Errore lettura file')
