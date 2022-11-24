@@ -144,28 +144,31 @@ def main():
                 file_list = []
             # Filtra i file lasciando solo i video
             fnames = [
-                f
-                for f in file_list
-                if os.path.isfile(os.path.join(folder, f))
-                   and f.lower().endswith((".mp4"))
+                 d
+                 for d in file_list
+                 if os.path.isdir(os.path.join(folder, d))
+                   and d.startswith("user")
             ]
+
             # Inserisce i file video nella lista
             window["-FILE LIST-"].update(fnames, disabled=False)  # Inserisce i file video nella lista
 
         elif event == "-FILE LIST-":  # Se un file è stato scelto dalla lista
             # Salvo il path del video selezionato
-            pathVideo = os.path.join(
+            pathDir = os.path.join(
                 values["-FOLDER-"], values["-FILE LIST-"][0]
             )
 
-            nameVideo = os.path.basename(pathVideo)  # Salvo il nome del video selezionato
+            nameVideo = os.path.basename(pathDir)  # Salvo il nome del video selezionato
 
-            # Divide il nome del video e il suo formato
-            strSplit = nameVideo.split('.')
-            Numb = ''.join((ch if ch in '0123456789' else ' ') for ch in strSplit[0])
-            strNumb = [int(i) for i in Numb.split()]
-            strNumb.reverse()
-            char = strNumb[0]  # Numero video selezionato
+            # # Divide il nome del video e il suo formato
+            # strSplit = nameVideo.split('.')
+            # Numb = ''.join((ch if ch in '0123456789' else ' ') for ch in strSplit[0])
+            # strNumb = [int(i) for i in Numb.split()]
+            # strNumb.reverse()
+            # char = strNumb[0]  # Numero video selezionato
+
+
 
             window["-TEXTVIDEONAME-"].update(nameVideo)  # Scrivo il nome del video  nella colonna di destra
             event, values = window.read()  # Rileggo gli eventi
