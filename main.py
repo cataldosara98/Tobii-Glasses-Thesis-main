@@ -111,23 +111,6 @@ def main():
 
     ##############################################################################
 
-    def creazioneFile(): #funzione per creare il file pupil.csv e progress bar
-
-        label.config(text="Il file pupil.csv è stato creato")
-        for i in range(3000):
-            if not sg.one_line_progress_meter('My 1-line progress meter',
-                                              i + 1, 3000,
-                                              'Creazione file pupil.csv',
-                                              'Attendere ... ',
-                                              orientation='v'):
-                print('Hit the break')
-
-                break
-        print("Visualizzazione e creazione del file pupil.csv")
-        print(pathVideo)
-        print(nameVideo)
-        readData(char)
-        pupilTableViewer(path="out/pupil.csv", pathStats="out/pupilsStatistics.csv", task1="out/task1.csv",task2="out/task2.csv", task3="out/task3.csv")
 
 
     while True:
@@ -144,23 +127,20 @@ def main():
                 file_list = []
             # Filtra i file lasciando solo i video
             fnames = [
-                 d
-                 for d in file_list
-                 if os.path.isdir(os.path.join(folder, d))
-                   and d.startswith("user")
+                f
+                for f in file_list
+                if os.path.isdir(os.path.join(folder, f))
+                   and f.startswith(("user"))
             ]
-
             # Inserisce i file video nella lista
             window["-FILE LIST-"].update(fnames, disabled=False)  # Inserisce i file video nella lista
 
         elif event == "-FILE LIST-":  # Se un file è stato scelto dalla lista
             # Salvo il path del video selezionato
-            pathDir = os.path.join(
-                values["-FOLDER-"], values["-FILE LIST-"][0]
-            )
+            pathVideo = os.path.join(os.path.join(values["-FOLDER-"], values["-FILE LIST-"][0]), "/scenevideo.mp4")
 
-            nameVideo = os.path.basename(pathDir)  # Salvo il nome del video selezionato
-
+            nameVideo = os.path.basename(pathVideo)  # Salvo il nome del video selezionato
+            #
             # # Divide il nome del video e il suo formato
             # strSplit = nameVideo.split('.')
             # Numb = ''.join((ch if ch in '0123456789' else ' ') for ch in strSplit[0])
@@ -168,26 +148,21 @@ def main():
             # strNumb.reverse()
             # char = strNumb[0]  # Numero video selezionato
 
-
-
-            window["-TEXTVIDEONAME-"].update(nameVideo)  # Scrivo il nome del video  nella colonna di destra
+            window["-TEXTVIDEONAME-"].update(nameVideo)  # Scrivo il nome del video nella colonna di destra
             event, values = window.read()  # Rileggo gli eventi
             if event == "-APRI-":  # Se è stato premuto il tasto apri, apro il video
                 resImage(nameVideo, char)
                 streamVideo(nameVideo)
 
-
             elif event == "-KEY1-":# Creazione/Visualizzazione del file pupil.csv
-                mainwindow = tkinter.Tk()
-                mainwindow.title("pupil.csv")
 
-                label = tkinter.Label(mainwindow, text = "Premi sul button per creare pupil.csv", font=("Arial", 22))
-                label.pack()
+                print("Visualizzazione e creazione del file pupil.csv")
+                print(pathVideo)
+                print(nameVideo)
+                readData(char)
+                pupilTableViewer(path="out/pupil.csv", pathStats="out/pupilsStatistics.csv", task1="out/task1.csv", task2="out/task2.csv", task3="out/task3.csv")
 
-                button = tkinter.Button(mainwindow, text="Press me ", command= lambda : threading.Thread(target=creazioneFile()).start())
-                button.pack()
 
-                mainwindow.mainloop()
 
 
             elif event == "-KEY3-":  # AOI
