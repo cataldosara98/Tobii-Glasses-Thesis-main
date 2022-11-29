@@ -4,6 +4,7 @@
 #
 # Relatori Prof.Andrea Francesco Abate, Dott.ssa Lucia Cimmino, Dott.ssa Lucia Cascone
 ##############################################################################
+import multiprocessing
 import tkinter
 import webbrowser
 from sys import path
@@ -23,6 +24,8 @@ from blinkDetection import *
 from heatmap import *
 from online import *
 from tkinter import  *
+from queue import Queue
+from threading import Thread
 
 
 
@@ -33,7 +36,7 @@ def main():
         [
             sg.Text("Cartella video:"),
             sg.In(size=(25, 1), enable_events=True, key="-FOLDER-"),
-            sg.FolderBrowse("Seleziona"),
+            sg.FolderBrowse("Seleziona",key="-IN-"),
         ],
         [
             sg.Listbox(
@@ -86,8 +89,8 @@ def main():
         [sg.Button("8. Generazione grafico Blink in intervallo di tempo", key="-KEY8-", size=(50, 1),
                    tooltip="Grafico Blink")],
         [sg.Button("9. Creazione Heatmap", key="-KEY9-", size=(50, 1), tooltip="Heatmap")],
-        [sg.Button("10. Scanpath Real-time", key="-KEY10-", size=(50, 1), tooltip="Real-time")
-         ],
+        # [sg.Button("10. Scanpath Real-time", key="-KEY10-", size=(50, 1), tooltip="Real-time")
+        #  ],
         [sg.Button("MANUALE UTENTE", key="-MANUALE-", size=(50, 0), tooltip="Consulta il manuale utente", button_color="orange", ) ],
 
     ]
@@ -110,9 +113,26 @@ def main():
     window = sg.Window("Tobii Pro Glasses 3 - Controller", layout)  # Assegno il nome alla finestra
 
     ##############################################################################
+    def progressBar():
+            for i in range (1000):
+                if not sg.one_line_progress_meter('My 1-line progress meter',
+                                                  i+1, 1000,
+                                                  'Creazione file pupil.csv',
+                                                  'Attendere...',
+                                                  orientation='v'):
+                    print('hit the break')
 
+                    break
+    def creazioneFile():
+        print("Visualizzazione e creazione del file pupil.csv")
+        print(pathVideo)
+        print(nameVideo)
+        readData(pathGaze)
+        pupilTableViewer(path="out/pupil.csv", pathStats="out/pupilsStatistics.csv", task1="out/task1.csv",
+                         task2="out/task2.csv", task3="out/task3.csv")
 
-
+    global x
+    x=0
     while True:
         event, values = window.read()  # Leggo gli eventi
         if event == sg.WIN_CLOSED:  # Se l'utente chiude la finestra, break
@@ -132,38 +152,41 @@ def main():
                 if os.path.isdir(os.path.join(folder, f))
                    and f.startswith(("user"))
             ]
+            #fnames=['.'.join(f.split('.')[:2]) for f in fnames]
             # Inserisce i file video nella lista
             window["-FILE LIST-"].update(fnames, disabled=False)  # Inserisce i file video nella lista
 
         elif event == "-FILE LIST-":  # Se un file è stato scelto dalla lista
-            # Salvo il path del video selezionato
-            pathVideo = os.path.join(os.path.join(values["-FOLDER-"], values["-FILE LIST-"][0]), "/scenevideo.mp4")
-
+            pathVideo = os.path.join(os.path.join(values["-IN-"], values["-FILE LIST-"][0])) + "/scenevideo.mp4"
+            pathGaze = os.path.join(os.path.join(values["-IN-"], values["-FILE LIST-"][0])) + "/gazedata.gz"
+            pathImu = os.path.join(os.path.join(values["-IN-"], values["-FILE LIST-"][0])) + "/imudata.gz"
             nameVideo = os.path.basename(pathVideo)  # Salvo il nome del video selezionato
-            #
-            # # Divide il nome del video e il suo formato
+            #char=fnames[0]
+
             # strSplit = nameVideo.split('.')
             # Numb = ''.join((ch if ch in '0123456789' else ' ') for ch in strSplit[0])
             # strNumb = [int(i) for i in Numb.split()]
             # strNumb.reverse()
-            # char = strNumb[0]  # Numero video selezionato
+            # if len(strNumb)==0:
+            #     char=''
+            # else:
+            #     char = strSplit[0]   # Numero video selezionato
 
             window["-TEXTVIDEONAME-"].update(nameVideo)  # Scrivo il nome del video nella colonna di destra
             event, values = window.read()  # Rileggo gli eventi
             if event == "-APRI-":  # Se è stato premuto il tasto apri, apro il video
-                resImage(nameVideo, char)
+                resImage(nameVideo)
                 streamVideo(nameVideo)
 
             elif event == "-KEY1-":# Creazione/Visualizzazione del file pupil.csv
 
-                print("Visualizzazione e creazione del file pupil.csv")
-                print(pathVideo)
-                print(nameVideo)
-                readData(char)
-                pupilTableViewer(path="out/pupil.csv", pathStats="out/pupilsStatistics.csv", task1="out/task1.csv", task2="out/task2.csv", task3="out/task3.csv")
+                t1 =threading.Thread(target=progressBar())
+                print("Thread1")
+                t2 = threading.Thread(target=creazioneFile())
+                print("Thread2")
 
-
-
+                t1.start()
+                t2.start()
 
             elif event == "-KEY3-":  # AOI
                 print(
@@ -173,19 +196,19 @@ def main():
                                             1. K-means Clustering
                                             2. DBscan clustering
                                             ''', title="AOI")
-                chooseAlgo(durEachScen(char), choose)
+                chooseAlgo(durEachScen(pathImu), choose)
                 if choose == "2":  # Se stato scelto DBScan stampa anche la tabella
                     tableViewer(path="out/aoi.csv")
 
             elif event == "-KEY4-":  # Visualizzazione dei grafici a barre
-                chooseGraph(char, durEachScen(char))
+                chooseGraph(pathImu, durEachScen(pathImu))
 
             elif event == "-KEY5-":  # Creazione/Visualizzazione dei file fixation.csv
-                readData(char)
+                readData(pathGaze)
                 tableViewer(path="out/fixation.csv")
 
             elif event == "-KEY2-":  # Disegna Scanpath
-                chooseScanpath(char, pathVideo)
+                chooseScanpath(pathGaze, pathVideo)
                 #generateScanpath(pathVideo)
 
             elif event == "-KEY7-":  # Creazione del file blinkDetected.csv
@@ -203,8 +226,8 @@ def main():
                 print("Generazione Heatmap")
                 draw_heatmap()
 
-            elif event == "-KEY10-":  # Apertura streaming video
-                streaming()
+            # elif event == "-KEY10-":  # Apertura streaming video
+            #     streaming()
 
         elif event == "-MANUALE-":  # esci dal programma
             webbrowser.open("https://docs.google.com/document/d/1J9Xh6weSI-Bh7-xAS8sCeSw95iaBJeSu/edit")
@@ -287,7 +310,7 @@ def pupilTableViewer(path, pathStats, task1, task2, task3):
                   auto_size_columns=True,
                   hide_vertical_scroll=True,
                   vertical_scroll_only=False,
-                  num_rows=2)],
+                  num_rows=1)],
         [sg.Text("Task 1:")],
         [sg.Table(values=data2,
                   headings=header_list2,
@@ -317,7 +340,7 @@ def pupilTableViewer(path, pathStats, task1, task2, task3):
                   headings=header_list,
                   display_row_numbers=True,
                   auto_size_columns=True,
-                  num_rows=min(25, len(data)))]
+                  num_rows=5)]
     ]
 
     window = sg.Window('Tabelle Informazioni Pupilla', layout, grab_anywhere=False, element_justification='c',

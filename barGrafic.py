@@ -9,7 +9,7 @@ import PySimpleGUI as sg
 
 
 # Funzione usata per scegliere il tipo di grafico che si vuole andare a creare e visualizzare
-def chooseGraph(char,scene):
+def chooseGraph(pathImu,scene):
     while True:
 
         #choose = input("Digita l'opzione scelta: ")
@@ -21,23 +21,23 @@ def chooseGraph(char,scene):
         5. Grafico a barre per l' AOI dominante nel tempo
         ''', 'Creazione grafici a barre')
         if choose == str(1):
-            rangeMin,rangeMax = openGazeData(char,1)
+            rangeMin,rangeMax = openGazeData(pathImu,1)
             barGraphAvgLFandRG(rangeMin,rangeMax)
         elif choose == str(2):
-            durScene = openGazeData(char,2)
+            durScene = openGazeData(pathImu,2)
             barGraphEachScene(durScene)
         elif choose == str(3):
             print("Numero di fissazioni nel tempo")
-            inter, listTime = openGazeData(char,3)
+            inter, listTime = openGazeData(pathImu,3)
             barGraphFix(inter,listTime)
         elif choose == str(4):
             print("Numero di aree di interesse nel tempo")
-            inter, listTime = openGazeData(char,3)
+            inter, listTime = openGazeData(pathImu,3)
             barGraphAoi(inter,listTime)
         elif choose == str(5):
             print("Aoi dominante nel tempo")
             timePoint = readAoiDbscan2(scene)
-            inter, listTime = openGazeData(char,4)
+            inter, listTime = openGazeData(pathImu,4)
             barGraphAoiDominant(listTime, timePoint)
         elif choose == choose != str(1) and choose != str(2) and choose != str(3) and choose != str(4) and choose!=(5):
           sg.popup('''Avviso: 
@@ -49,9 +49,9 @@ def chooseGraph(char,scene):
 
 # Funzione creata per leggere i valori del file gazedata del video corrispondente
 # Restituisce l'intervallo di tempo
-def openGazeData(char,choose):
+def openGazeData(pathGaze, choose):
 
-    with gzip.open('dataGaze/gazedata'+str(char)+'.gz') as f1:
+    with gzip.open(pathGaze) as f1:
         time = []
         for data in f1:
             d = json.loads(data)

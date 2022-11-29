@@ -9,8 +9,8 @@ def rescaleFrame(frame):
     dimensions = (width, height)
     return cv2.resize(frame, dimensions, interpolation=cv2.INTER_AREA)
 
-def resImage(name, char):
-    cap = cv2.VideoCapture('video/'+str(name))
+def resImage( char):
+    cap = cv2.VideoCapture(char)
     listDur = numberScene(char)
     fps = cap.get(cv2.CAP_PROP_FPS)  # Prendo il valore degli fps del video
 

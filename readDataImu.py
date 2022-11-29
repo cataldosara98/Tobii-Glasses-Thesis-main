@@ -3,11 +3,11 @@ import json
 
 
 # Funzione usata per creare una lista avente la durata di ogni scena trovata.
-def durEachScen(char):
+def durEachScen(pathImu):
 
     # Apro il file imudata del video corrispondente
-    with gzip.open('dataImu/imudata'+str(char)+'.gz') as f:
-
+    with gzip.open(pathImu) as f:
+    #with gzip.open('dataImu/imudata'+str(char)+'.gz') as f:
         # Variabili
         positionX = []
         positionY = []

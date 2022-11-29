@@ -4,7 +4,7 @@ import json
 import pandas as pd
 import matplotlib
 import PySimpleGUI as sg
-
+import os
 from fixatDetection import *
 from fixColor import *
 from pupil import *
@@ -29,9 +29,10 @@ def readFileFixation():
 #***********************************************************************************#
 
 # Funzione utilizzata per leggere i dati del file gazedata.gz e scrivere un nuovo file .csv
-def readData(char):
+def readData(pathGaze):
     # Confronto il nome del video
-    with gzip.open('dataGaze/gazedata' + str(char) + '.gz') as f1:
+
+    with gzip.open(pathGaze) as f1:
 
         # Liste vuote
         positionX = []
