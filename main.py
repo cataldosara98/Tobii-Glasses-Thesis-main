@@ -150,7 +150,7 @@ def main():
                 f
                 for f in file_list
                 if os.path.isdir(os.path.join(folder, f))
-                   and f.startswith(("user"))
+                   # and f.startswith(("user"))
             ]
             #fnames=['.'.join(f.split('.')[:2]) for f in fnames]
             # Inserisce i file video nella lista
