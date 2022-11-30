@@ -151,7 +151,7 @@ def readData(pathGaze):
         #Task 3
 
         # fields2 è una lista avente i nomi dei campi del nuovo file csv
-        fields2 = ['Img', 'DiamRipRG', 'DiamRipLF', 'DiamMax', 'DiffMinMax', 'DiamAvg']
+        fields2 = ['Img', 'DiamRipRG', 'DiamRipLF', 'DiamMaxRG', 'DiamMaxLF', 'DiffMinMax', 'DiamAvg']
 
         # Creazione e apertura del file di nome task3.csv
         with open('out/task3.csv', 'w', newline="") as csvTask3:
@@ -160,10 +160,10 @@ def readData(pathGaze):
             w3.writeheader()
 
             # Inserisco i valori nei campi del dictionary
-            w3.writerow({'Img': "T3_01", 'DiamRipRG': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 54, 56)[0], 'DiamRipLF': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 54, 56)[1], 'DiamMax': dmaxTot(time, eyeRGdiameter, eyeLFdiameter, 56, 60), 'DiffMinMax': rispPup(time, eyeRGdiameter, eyeLFdiameter, 56, 60), 'DiamAvg': diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, 56, 60)})
-            w3.writerow({'Img': "T3_02", 'DiamRipRG': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 60, 62)[0], 'DiamRipLF': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 60, 62)[1], 'DiamMax': dmaxTot(time, eyeRGdiameter, eyeLFdiameter, 62, 66), 'DiffMinMax': rispPup(time, eyeRGdiameter, eyeLFdiameter, 62, 66), 'DiamAvg': diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, 62, 66)})
-            w3.writerow({'Img': "T3_03", 'DiamRipRG': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 66, 68)[0], 'DiamRipLF': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 66, 68)[1], 'DiamMax': dmaxTot(time, eyeRGdiameter, eyeLFdiameter, 68, 72), 'DiffMinMax': rispPup(time, eyeRGdiameter, eyeLFdiameter, 68, 72), 'DiamAvg': diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, 68, 72)})
-            w3.writerow({'Img': "T3_04", 'DiamRipRG': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 72, 74)[0], 'DiamRipLF': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 72, 74)[1], 'DiamMax': dmaxTot(time, eyeRGdiameter, eyeLFdiameter, 76, 80), 'DiffMinMax': rispPup(time, eyeRGdiameter, eyeLFdiameter, 76, 80), 'DiamAvg': diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, 76, 80)})
+            w3.writerow({'Img': "T3_01", 'DiamRipRG': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 54, 56)[0], 'DiamRipLF': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 54, 56)[1], 'DiamMaxRG': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 56, 60)[0], 'DiamMaxLF': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 56, 60)[1], 'DiffMinMax': rispPup(time, eyeRGdiameter, eyeLFdiameter, 56, 60), 'DiamAvg': diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, 56, 60)})
+            w3.writerow({'Img': "T3_02", 'DiamRipRG': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 60, 62)[0], 'DiamRipLF': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 60, 62)[1], 'DiamMaxRG': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 62, 66)[0], 'DiamMaxLF': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 62, 66)[1], 'DiffMinMax': rispPup(time, eyeRGdiameter, eyeLFdiameter, 62, 66), 'DiamAvg': diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, 62, 66)})
+            w3.writerow({'Img': "T3_03", 'DiamRipRG': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 66, 68)[0], 'DiamRipLF': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 66, 68)[1], 'DiamMaxRG': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 68, 72)[0], 'DiamMaxLF': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 68, 72)[1], 'DiffMinMax': rispPup(time, eyeRGdiameter, eyeLFdiameter, 68, 72), 'DiamAvg': diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, 68, 72)})
+            w3.writerow({'Img': "T3_04", 'DiamRipRG': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 72, 74)[0], 'DiamRipLF': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 72, 74)[1], 'DiamMaxRG': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 76, 80)[0], 'DiamMaxLF': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 76, 80)[1], 'DiffMinMax': rispPup(time, eyeRGdiameter, eyeLFdiameter, 76, 80), 'DiamAvg': diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, 76, 80)})
 
         # Apertura del file di nome pupil.csv in modalità append
         with open('out/pupilsStatistics.csv', 'w', newline="") as csvPupilStat:
