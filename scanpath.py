@@ -3,7 +3,8 @@ import pandas as pd
 import tkinter as tk
 import keyboard
 import PySimpleGUI as sg
-
+import ctypes
+ctypes.windll.shcore.SetProcessDpiAwareness(2)
 def chooseScanpath(char, pathVideo):
     while True:
 
@@ -58,11 +59,12 @@ def generateScanpath(path):
     displayWidth = root.winfo_screenwidth()
     displayHeight = root.winfo_screenheight()
 
+    #root.mainloop()
+
     #Formatto x,y per avere le coordinate in pixel
     for x, y in zip(posX, posY):
         posXPix.append(round(x * displayWidth))
         posYPix.append(round(y * displayHeight))
-
 
 
     vid_filename = path #Il video utilizzato, specificato nel main
@@ -193,6 +195,8 @@ def generateFrame(path):
     root = tk.Tk()  # Libreria tkinter
     displayWidth = root.winfo_screenwidth()
     displayHeight = root.winfo_screenheight()
+
+    #root.mainloop()
 
     # Formatto x,y per avere le coordinate in pixel
     for x, y in zip(posX, posY):
