@@ -129,7 +129,7 @@ def main():
         print(nameVideo)
         readData(pathGaze)
         pupilTableViewer(path="out/pupil.csv", pathStats="out/pupilsStatistics.csv", task1="out/task1.csv",
-                         task2="out/task2.csv", task3="out/task3.csv")
+                         task2="out/task2.csv", task3="out/task3.csv", task4="out/task4.csv")
 
     global x
     x=0
@@ -235,7 +235,7 @@ def main():
     window.close()
 
 
-def pupilTableViewer(path, pathStats, task1, task2, task3):
+def pupilTableViewer(path, pathStats, task1, task2, task3, task4):
     # Popola la tabella con i dati
     data = []
     header_list = []
@@ -302,6 +302,18 @@ def pupilTableViewer(path, pathStats, task1, task2, task3):
         except:
             sg.popup_error('Errore lettura file task3.csv')
 
+    if task4 is not None:
+        try:
+            df6 = pd.read_csv(task4, sep=',', engine='python', header=None)
+            data6 = df6.values.tolist()
+
+            header_list6 = df6.iloc[0].tolist()
+
+            data6 = df6[1:].values.tolist()
+
+        except:
+            sg.popup_error('Errore lettura file task4.csv')
+
     layout = [
         [sg.Text("Statistiche totali pupille:")],
         [sg.Table(values=data3,
@@ -330,6 +342,14 @@ def pupilTableViewer(path, pathStats, task1, task2, task3):
         [sg.Text("Task 3:")],
         [sg.Table(values=data5,
                   headings=header_list5,
+                  display_row_numbers=True,
+                  auto_size_columns=True,
+                  hide_vertical_scroll=True,
+                  vertical_scroll_only=False,
+                  num_rows=1)],
+        [sg.Text("Task 4:")],
+        [sg.Table(values=data6,
+                  headings=header_list6,
                   display_row_numbers=True,
                   auto_size_columns=True,
                   hide_vertical_scroll=True,
