@@ -60,7 +60,7 @@ def main():
             9. Creazione Heatmap
             10.Scanpath Real-time
             '''
-    print("Chiara ho fatto la push ....")
+    print("13/12/2022 18.15 push ....")
     # Costruisco il Layout di destra
     right_viewer_column = [
         [sg.Text("Video selezionato:")],
