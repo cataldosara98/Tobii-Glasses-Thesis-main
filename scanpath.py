@@ -61,6 +61,8 @@ def generateScanpath(path, pathGaze):
     displayWidth = root.winfo_screenwidth()
     displayHeight = root.winfo_screenheight()
 
+
+
     #root.mainloop()
 
     #Formatto x,y per avere le coordinate in pixel
