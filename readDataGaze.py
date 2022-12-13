@@ -82,6 +82,7 @@ def readData(pathGaze):
                 positionY.append(gaze2d[1])  # lista coordinata y
                 positionZ.append(gaze3d[2])  # lista coordinata z
 
+
         # for per iterare su ciascun diametro di ogni istante
         for diamLF,diamRG in zip(eyeLFdiameter,eyeRGdiameter):
             averageLFRG.append(averageLeftAndRight(diamLF,diamRG))#Calcolo media per ogni istante

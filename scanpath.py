@@ -4,8 +4,9 @@ import tkinter as tk
 import keyboard
 import PySimpleGUI as sg
 import ctypes
+from readDataGaze import *
 ctypes.windll.shcore.SetProcessDpiAwareness(2)
-def chooseScanpath(char, pathVideo):
+def chooseScanpath(pathGaze, pathVideo):
     while True:
 
         #choose = input("Digita l'opzione scelta: ")
@@ -15,7 +16,7 @@ def chooseScanpath(char, pathVideo):
         ''', )
         if choose == str(1):
             path = pathVideo
-            generateScanpath(path)
+            generateScanpath(path, pathGaze)
         elif choose == str(2):
             sg.popup_no_buttons("CREAZIONE SCANPATH IN CORSO...", auto_close=True)
             generateFrame(pathVideo)
@@ -24,7 +25,8 @@ def chooseScanpath(char, pathVideo):
          - Il numero scelto non è non valido ;
          - Uscita dalla funzione  ''')
         break
-def generateScanpath(path):
+def generateScanpath(path, pathGaze):
+    readData(pathGaze)
     # dati del grafico fixation
     csv_file = 'out/fixation.csv'
     # Salvo in un dataFrame il file letto
@@ -122,7 +124,7 @@ def generateScanpath(path):
                 Ytemp.append(y)
                 d_temp.append(d)
                 lista_flag.append(l)
-                
+
                 for a, b, i, d_t, l_f in zip(Xtemp, Ytemp, range(len(Xtemp)-1),d_temp, lista_flag):
                     # Ridisegno i cerchi precedenti
                     cv2.circle(frame, (int(a), int(b)), int(d_t), (255,3,224), -1)
@@ -156,10 +158,6 @@ def generateScanpath(path):
     cap.release()
     if flag == True:  # Ci entro solo se è stato premuto il tasto q, chiudo il video
         cv2.destroyWindow('Scanpath')
-
-
-
-
 
 def generateFrame(path):
     # dati del grafico fixation

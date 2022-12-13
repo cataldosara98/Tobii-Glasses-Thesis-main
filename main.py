@@ -209,7 +209,7 @@ def main():
 
             elif event == "-KEY2-":  # Disegna Scanpath
                 chooseScanpath(pathGaze, pathVideo)
-                generateScanpath(pathVideo)
+                generateScanpath(pathVideo, pathGaze)
 
             elif event == "-KEY7-":  # Creazione del file blinkDetected.csv
                 blinkDetect()
