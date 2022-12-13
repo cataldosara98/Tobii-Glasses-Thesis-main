@@ -60,7 +60,7 @@ def main():
             9. Creazione Heatmap
             10.Scanpath Real-time
             '''
-    print("Sara")
+    print("Chiara ho fatto la push")
     # Costruisco il Layout di destra
     right_viewer_column = [
         [sg.Text("Video selezionato:")],
@@ -209,7 +209,7 @@ def main():
 
             elif event == "-KEY2-":  # Disegna Scanpath
                 chooseScanpath(pathGaze, pathVideo)
-                #generateScanpath(pathVideo)
+                generateScanpath(pathVideo)
 
             elif event == "-KEY7-":  # Creazione del file blinkDetected.csv
                 blinkDetect()
