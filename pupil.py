@@ -98,4 +98,27 @@ def diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, t1, t2) :
                 avg = sum(a)/len(a)
     return avg
 
+#Task4
+#Prima immagine osservata
+def firstImg(time, eyeRGdiameter, t1) :
+    pos = ""
+    #Divisione schermo
+    centerImg = (max(eyeRGdiameter) - min(eyeRGdiameter))/2
+    for x, y in zip(time, eyeRGdiameter):   #prendiamo la prima posizione di x nell'intervallo
+        if x > t1:
+            first = x
+    if x < centerImg : #sinistra
+        pos = "dx"
+    elif x > centerImg :    #destra
+        pos = "sx"
+    else :  #centro
+        pos = "c"
+    return pos
 
+#il numero di saccadi e fissazioni nelle aree di interesse
+def sacFix(start, numFix, dur, t1, t2) :
+    tot = 0
+    for x, y, z in zip(numFix, dur, start):
+        if z > t1 and z+y < t2 and y > 0.1 :
+            tot = tot + x
+    return tot

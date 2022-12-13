@@ -165,6 +165,28 @@ def readData(pathGaze):
             w3.writerow({'Img': "T3_03", 'DiamRipRG': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 66, 68)[0], 'DiamRipLF': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 66, 68)[1], 'DiamMaxRG': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 68, 72)[0], 'DiamMaxLF': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 68, 72)[1], 'DiffMinMax': rispPup(time, eyeRGdiameter, eyeLFdiameter, 68, 72), 'DiamAvg': diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, 68, 72)})
             w3.writerow({'Img': "T3_04", 'DiamRipRG': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 72, 74)[0], 'DiamRipLF': dimRipLFRG(time, eyeRGdiameter, eyeLFdiameter, 72, 74)[1], 'DiamMaxRG': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 76, 80)[0], 'DiamMaxLF': maxDimInt(time, eyeRGdiameter, eyeLFdiameter, 76, 80)[1], 'DiffMinMax': rispPup(time, eyeRGdiameter, eyeLFdiameter, 76, 80), 'DiamAvg': diamAvgPup(time, eyeRGdiameter, eyeLFdiameter, 76, 80)})
 
+        #Task4
+            csv_file1 = 'out/fixation.csv'
+            data = pd.read_csv(csv_file1)
+            d = data.iloc[:, [0, 1, 2, 3, 4]].values
+            numFix = [element for element in d[:, 0]]
+            start = [element for element in d[:, 1]]
+            dur = [element for element in d[:, 2]]
+            # fields3 è una lista avente i nomi dei campi del nuovo file csv
+            fields3 = ['FirstImg', 'SacFix', 'PupRea']
+
+            # Creazione e apertura del file di nome task3.csv
+            with open('out/task4.csv', 'w', newline="") as csvTask4:
+                # w4 è una dictionary con i campi della lista fields
+                w4 = cs.DictWriter(csvTask4, fieldnames=fields3, delimiter=',')
+                w4.writeheader()
+
+                # Inserisco i valori nei campi del dictionary
+                w4.writerow({'FirstImg': firstImg(time, positionX, 300), 'SacFix': sacFix(start, numFix, dur, 300, 304)})
+                w4.writerow({'FirstImg': firstImg(time, positionX, 84), 'SacFix': sacFix(start, numFix, dur, 304, 308)})
+                w4.writerow({'FirstImg': firstImg(time, positionX, 90), 'SacFix': sacFix(start, numFix, dur, 308, 312)})
+                w4.writerow({'FirstImg': firstImg(time, positionX, 100), 'SacFix': sacFix(start, numFix, dur, 312, 316)})
+
         # Apertura del file di nome pupil.csv in modalità append
         with open('out/pupilsStatistics.csv', 'w', newline="") as csvPupilStat:
 
@@ -183,7 +205,10 @@ def readData(pathGaze):
 
         readFilePupil()
         csvPupilStat.close()  # Chiusura del file
-        csvTask1.close()  # Chiusura del file
+        csvTask1.close()
+        csvTask2.close()
+        csvTask3.close()
+        csvTask4.close() # Chiusura del file
 
         #*********************************************************************************************************#
         #Richiamo la fnuzione fixation per computare le fissazioni
