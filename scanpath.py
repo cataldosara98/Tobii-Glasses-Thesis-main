@@ -19,7 +19,7 @@ def chooseScanpath(pathGaze, pathVideo):
             generateScanpath(path, pathGaze)
         elif choose == str(2):
             sg.popup_no_buttons("CREAZIONE SCANPATH IN CORSO...", auto_close=True)
-            generateFrame(pathVideo)
+            generateFrame(pathVideo, pathGaze)
         elif choose == choose != str(1) and choose != str(2) :
           sg.popup('''Avviso: 
          - Il numero scelto non è non valido ;
@@ -161,7 +161,8 @@ def generateScanpath(path, pathGaze):
     if flag == True:  # Ci entro solo se è stato premuto il tasto q, chiudo il video
         cv2.destroyWindow('Scanpath')
 
-def generateFrame(path):
+def generateFrame(path, pathGaze):
+    readData(pathGaze)
     # dati del grafico fixation
     csv_file = 'out/fixation.csv'
     # Salvo in un dataFrame il file letto
@@ -258,8 +259,8 @@ def generateFrame(path):
                     cv2.line(frame, (Xtemp[i], Ytemp[i]), (Xtemp[i + 1], Ytemp[i + 1]), (238, 238, 238), 2)
                     # cv2.putText(frame, str(i), (posXPix[i], posYPix[i]), cv2.FONT_HERSHEY_DUPLEX, 0.8, (0, 255, 0), 2, cv2.LINE_AA)
 
-                cv2.imshow('Scanpath', frame )
-                #cv2.imwrite(frame )
+                cv2.imshow('Scanpath', frame)
+                #cv2.imwrite(frame)
 
                 # Comando per bloccare l'esecuzione dei cicli e la creazione dello scanpath sul video
                 if keyboard.is_pressed('q'):
